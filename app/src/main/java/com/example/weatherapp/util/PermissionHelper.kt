@@ -14,8 +14,7 @@ class PermissionHelper(val activity: Activity, val view: View) {
     private val permission = Manifest.permission.ACCESS_FINE_LOCATION
     private val permissionExpalnationString: String = "Location Permission required to determine current location"
 
-    private fun requestPermissions(){
-
+    fun requestLocationPermissions(){
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
             showRationale()
         } else {
@@ -41,9 +40,10 @@ class PermissionHelper(val activity: Activity, val view: View) {
         }.show()
     }
 
-    private fun checkPermission(): Boolean{
+    fun checkLocationPermission(): Boolean{
         val locationPermission = ActivityCompat.checkSelfPermission(activity, permission)
         return (locationPermission == PackageManager.PERMISSION_GRANTED)
     }
+
 
 }
