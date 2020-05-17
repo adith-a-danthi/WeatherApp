@@ -47,7 +47,7 @@ import com.example.weatherapp.data.source.remote.api.response.inner.*
 }
 
  */
-@Entity(tableName = "weather_data")
+//@Entity(tableName = "weather_data")
 class WeatherLocation(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
@@ -55,6 +55,6 @@ class WeatherLocation(
     val wind: Wind,
     val main: Main,
     val sys: Sys,
-    val weather: Weather
+    val weather: List<Weather>
 
 )

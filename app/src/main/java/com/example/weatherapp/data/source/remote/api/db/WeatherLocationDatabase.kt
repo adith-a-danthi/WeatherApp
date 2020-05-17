@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.weatherapp.data.source.remote.api.response.WeatherLocation
 
-@Database(entities = [WeatherLocation::class], version = 1)
+//@Database(entities = [WeatherLocation::class], version = 1)
 abstract class WeatherLocationDatabase : RoomDatabase() {
 
     abstract fun weatherLocationDao(): WeatherLocationDao

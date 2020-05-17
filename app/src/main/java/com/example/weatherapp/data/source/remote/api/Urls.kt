@@ -9,9 +9,9 @@ object Urls {
     private const val PATH = "data"
     private const val API_VERSION = "2.5"
 
-    const val BASE_URL =  "$PROTOCOL$DOMAIN/$PATH/$API_VERSION"
+    const val BASE_URL =  "$PROTOCOL$DOMAIN/$PATH/$API_VERSION/"
 
-    const val WEATHER_ENDPOINT = "/weather"
+    const val WEATHER_ENDPOINT = "weather"
 
     const val URL_PARAM_APP_ID = "appid"
     const val URL_PARAM_LAT = "lat"
