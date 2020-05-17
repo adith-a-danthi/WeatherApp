@@ -7,9 +7,8 @@ import javax.inject.Inject
 
 class DataRepository @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val remoteDataSource: RemoteDataSource,
-    private val openWeatherMapApi: OpenWeatherMapApi
+    private val remoteDataSource: RemoteDataSource
 )  {
 
-    fun testAPI(lat: Float, lon: Float) = openWeatherMapApi.getWeatherLatLonTest(lat, lon)
+    fun testAPI(lat: Float, lon: Float) = remoteDataSource.openWeatherMapApi.getWeatherLatLonTest(lat, lon)
 }

@@ -1,4 +1,4 @@
-package com.example.weatherapp.data.source.remote.api.db
+package com.example.weatherapp.data.source.local.db
 
 import android.content.Context
 import androidx.room.Database
@@ -11,7 +11,8 @@ abstract class WeatherLocationDatabase : RoomDatabase() {
 
     abstract fun weatherLocationDao(): WeatherLocationDao
 
-    companion object {
+    // Taken care by DatabaseModule
+/*    companion object {
         @Volatile
         private var INSTANCE: WeatherLocationDatabase? = null
 
@@ -29,7 +30,6 @@ abstract class WeatherLocationDatabase : RoomDatabase() {
             }
             return INSTANCE
         }
-
-    }
+    }*/
 
 }

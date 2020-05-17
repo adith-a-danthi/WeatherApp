@@ -6,6 +6,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
 
+// Default factory for all
 @Singleton
 class AppViewModelFactory @Inject constructor(
     private val viewModels: MutableMap<Class<out ViewModel>,

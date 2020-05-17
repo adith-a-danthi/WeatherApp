@@ -1,4 +1,4 @@
-package com.example.weatherapp.data.source.remote.api.db
+package com.example.weatherapp.data.source.local.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

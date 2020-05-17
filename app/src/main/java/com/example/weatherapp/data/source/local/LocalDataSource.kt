@@ -1,9 +1,6 @@
 package com.example.weatherapp.data.source.local
 
-import android.app.Application
-import com.example.weatherapp.data.source.DataSource
+import com.example.weatherapp.data.source.local.db.WeatherLocationDatabase
 import javax.inject.Inject
 
-class LocalDataSource @Inject constructor(application: Application) {
-
-}
+class LocalDataSource @Inject constructor(locationDatabase: WeatherLocationDatabase)
