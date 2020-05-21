@@ -54,6 +54,6 @@ class WeatherLocation(
     val wind: Wind,
     val main: Main,
     val sys: Sys,
-    val weather: List<Weather>
-
+    val weather: List<Weather>,
+    val name: String
 )

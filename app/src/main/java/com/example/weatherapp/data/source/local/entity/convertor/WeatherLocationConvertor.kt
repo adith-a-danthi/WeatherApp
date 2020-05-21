@@ -5,6 +5,7 @@ import com.example.weatherapp.data.source.remote.api.response.WeatherLocation
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 
+
 class WeatherLocationConvertor {
 
     companion object{

@@ -1,5 +1,6 @@
 package com.example.weatherapp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.location.Location
@@ -14,6 +15,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.location.LocationManagerCompat.isLocationEnabled
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.weatherapp.data.source.remote.api.response.WeatherLocation
 import com.example.weatherapp.util.PermissionHelper
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -21,6 +23,10 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_main.*
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
 
     private lateinit var mPermissionHelper: PermissionHelper
-    private lateinit var coordinatorLayout: CoordinatorLayout
+    // private lateinit var coordinatorLayout: CoordinatorLayout
     private var mLastLocation: Location? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,8 +58,33 @@ class MainActivity : AppCompatActivity() {
                 getLastLocation()
             } else {
                 Log.d("LOCATION", it.toString())
+                updateViews(it)
             }
         })
+    }
+
+    private fun updateViews(weatherLocation: WeatherLocation) {
+        val currentHour = SimpleDateFormat("HH", Locale.getDefault()).format(Date()).toInt()
+        if (currentHour in 20..24 || currentHour in 0..5)
+            rootLayout.background = getDrawable(R.drawable.night_gradient)
+        else if (currentHour in 6..8 || currentHour in 17..19)
+            rootLayout.background = getDrawable(R.drawable.evening_gradient)
+        else
+            rootLayout.background = getDrawable(R.drawable.morning_gradient)
+
+
+        city_tv.text = weatherLocation.name
+        country_tv.text = weatherLocation.sys.country
+        status.text = weatherLocation.weather[0].description
+        temp_tv.text = ("%.2f".format(weatherLocation.main.temp - 273.15))
+
+        sunrise_time.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(weatherLocation.sys.sunrise))
+        sunrise_time.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(weatherLocation.sys.sunset))
+
+        wind_speed.text = weatherLocation.wind.speed.toString()
+        humidity.text = weatherLocation.main.humidity.toString()
+        pressure.text = weatherLocation.main.pressure.toString()
+
     }
 
     private fun getLastLocation() {
@@ -82,9 +113,7 @@ class MainActivity : AppCompatActivity() {
 
                     } else {
                         mainViewModel.getWeather(mLastLocation!!.latitude.toFloat(), mLastLocation!!.longitude.toFloat())
-
                     }
-
                 }
 
             } else {
@@ -97,6 +126,5 @@ class MainActivity : AppCompatActivity() {
             getLastLocation()
         }
     }
-
 
 }

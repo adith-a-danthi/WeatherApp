@@ -2,9 +2,12 @@ package com.example.weatherapp.data.source.local.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.weatherapp.data.source.local.entity.WeatherLocationLocal
+import com.example.weatherapp.data.source.local.entity.convertor.WeatherLocationConvertor
 
-@Database(entities = [WeatherLocationLocal::class], version = 1)
+@Database(entities = [WeatherLocationLocal::class], version = 1, exportSchema = false)
+@TypeConverters(WeatherLocationConvertor::class)
 abstract class WeatherLocationDatabase : RoomDatabase() {
 
     abstract fun weatherLocationDao(): WeatherLocationDao
