@@ -1,8 +1,10 @@
 package com.example.weatherapp.data.source.remote.api
 
+import com.example.weatherapp.BuildConfig
+
 object Urls {
 
-    const val API_KEY = "af095feda51c14a6152cf7bd32e06667"
+    const val API_KEY = BuildConfig.API_KEY
 
     private const val PROTOCOL = "https://"
     private const val DOMAIN = "api.openweathermap.org"
