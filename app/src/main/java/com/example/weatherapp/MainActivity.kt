@@ -1,6 +1,5 @@
 package com.example.weatherapp
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.location.Location
@@ -11,7 +10,6 @@ import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.location.LocationManagerCompat.isLocationEnabled
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,12 +19,10 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
-import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
@@ -75,11 +71,12 @@ class MainActivity : AppCompatActivity() {
 
         city_tv.text = weatherLocation.name
         country_tv.text = weatherLocation.sys.country
-        status.text = weatherLocation.weather[0].description
-        temp_tv.text = ("%.2f".format(weatherLocation.main.temp - 273.15))
+        status.text = weatherLocation.weather[0].description.capitalize()
+        temp_tv.text = ("%.0f".format(weatherLocation.main.temp - 273.15))
 
-        sunrise_time.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(weatherLocation.sys.sunrise))
-        sunrise_time.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(weatherLocation.sys.sunset))
+        val formatter = SimpleDateFormat("HH:mm a", Locale.getDefault())
+        sunrise_time.text = formatter.format(Date(weatherLocation.sys.sunrise * 1000))
+        sunset_time.text = formatter.format(Date(weatherLocation.sys.sunset * 1000))
 
         wind_speed.text = weatherLocation.wind.speed.toString()
         humidity.text = weatherLocation.main.humidity.toString()
