@@ -15,7 +15,10 @@ interface WeatherLocationDao {
     fun insert(weatherLocation: WeatherLocationLocal)
 
     @Query("SELECT * FROM weather_data ORDER BY id DESC LIMIT 1")
-    fun getRecentData(): LiveData<WeatherLocationLocal>
+    fun getRecentData(): WeatherLocationLocal
+
+    @Query("SELECT COUNT(*) FROM weather_data")
+    fun getCount(): Long
 
     @Delete
     fun delete(weatherLocation: WeatherLocationLocal)

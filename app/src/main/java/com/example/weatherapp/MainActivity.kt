@@ -50,10 +50,10 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.apiData.observe(this, Observer {
             if (it == null){
-                Log.d("LOCATION", "it is null")
+//                Log.d("LOCATION", "it is null")
                 getLastLocation()
             } else {
-                Log.d("LOCATION", it.toString())
+//                Log.d("LOCATION", it.toString())
                 updateViews(it)
             }
         })

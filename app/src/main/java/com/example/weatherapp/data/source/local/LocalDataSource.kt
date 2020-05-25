@@ -1,5 +1,6 @@
 package com.example.weatherapp.data.source.local
 
+import androidx.lifecycle.LiveData
 import com.example.weatherapp.data.source.local.db.WeatherLocationDatabase
 import com.example.weatherapp.data.source.local.entity.WeatherLocationLocal
 import com.example.weatherapp.util.runInBackground
@@ -16,4 +17,18 @@ class LocalDataSource @Inject constructor(val locationDatabase: WeatherLocationD
     }
 
     // TODO("Add other operations")
+    fun delete(weatherLocationLocal: WeatherLocationLocal) {
+        runInBackground {
+            locationDatabase.weatherLocationDao().delete(weatherLocationLocal)
+        }
+    }
+
+    fun getRecent(): WeatherLocationLocal {
+        return locationDatabase.weatherLocationDao().getRecentData()
+    }
+
+    fun getCount(): Long {
+        return locationDatabase.weatherLocationDao().getCount()
+    }
+
 }
