@@ -59,10 +59,10 @@ class DataRepository @Inject constructor(
 
             if (diff < 90) {
                 weatherData.value = recentWeatherData.weatherLocationResponse
-            } /*else {
-                runInBackground { localDataSource.delete(recentWeatherData) }
-            }*/
-
+            } else {
+//                runInBackground { localDataSource.delete(recentWeatherData) }
+                testAPI(lat, lon).enqueue(callback)
+            }
         } else {
             testAPI(lat, lon).enqueue(callback)
         }
