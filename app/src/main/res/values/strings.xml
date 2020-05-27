@@ -3,10 +3,19 @@
 
     <string name="location_pin_desc">Location pin </string>
     <string name="settings_desc">Settings</string>
+    <string name="bg_gradient">Background Gradient</string>
+
     <string name="city">City</string>
     <string name="country">Country</string>
     <string name="status">Clear Sky</string>
     <string name="temperature_default">0</string>
     <string name="degrees_symbol">°</string>
+
+    <string name="rainfall">Rainfall</string>
+    <string name="pressure">Pressure</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind">Wind</string>
+    <string name="sunset">Sunset</string>
+    <string name="sunrise">Sunrise</string>
 
 </resources>

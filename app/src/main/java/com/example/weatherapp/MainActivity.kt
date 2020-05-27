@@ -57,6 +57,11 @@ class MainActivity : AppCompatActivity() {
                 updateViews(it)
             }
         })
+
+        swiperefreshlayout.setOnRefreshListener {
+            getLastLocation()
+            swiperefreshlayout.isRefreshing = false
+        }
     }
 
     private fun updateViews(weatherLocation: WeatherLocation) {
@@ -81,6 +86,8 @@ class MainActivity : AppCompatActivity() {
         wind_speed.text = weatherLocation.wind.speed.toString()
         humidity.text = weatherLocation.main.humidity.toString()
         pressure.text = weatherLocation.main.pressure.toString()
+
+        Toast.makeText(this, " update views", Toast.LENGTH_LONG).show()
 
     }
 
