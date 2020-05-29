@@ -7,7 +7,6 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.location.LocationManagerCompat.isLocationEnabled
@@ -87,8 +86,6 @@ class MainActivity : AppCompatActivity() {
         humidity.text = weatherLocation.main.humidity.toString()
         pressure.text = weatherLocation.main.pressure.toString()
 
-        Toast.makeText(this, " update views", Toast.LENGTH_LONG).show()
-
     }
 
     private fun getLastLocation() {
@@ -98,10 +95,8 @@ class MainActivity : AppCompatActivity() {
             val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
             if (isLocationEnabled(locationManager)) {
-
                 mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
                     mLastLocation = task.result
-
                     if (mLastLocation == null) {
 
                         val mLocationRequest = LocationRequest()
@@ -114,7 +109,7 @@ class MainActivity : AppCompatActivity() {
                         mFusedLocationClient.requestLocationUpdates(
                             mLocationRequest, LocationCallback(), Looper.myLooper()
                         )
-
+                        getLastLocation()
                     } else {
                         mainViewModel.getWeather(mLastLocation!!.latitude.toFloat(), mLastLocation!!.longitude.toFloat())
                     }
@@ -123,7 +118,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this,"Turn on Location", Toast.LENGTH_LONG).show()
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                startActivity(intent)
+                startActivityForResult(intent, 0)
             }
         } else {
             mPermissionHelper.requestLocationPermissions()
@@ -131,4 +126,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        getLastLocation()
+        super.onActivityResult(requestCode, resultCode, data)
+    }
 }
