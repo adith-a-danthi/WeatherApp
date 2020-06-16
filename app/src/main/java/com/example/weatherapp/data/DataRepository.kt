@@ -7,6 +7,10 @@ import com.example.weatherapp.data.source.local.entity.WeatherLocationLocal
 import com.example.weatherapp.data.source.remote.RemoteDataSource
 import com.example.weatherapp.data.source.remote.api.response.WeatherLocation
 import com.example.weatherapp.util.runInBackground
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,31 +24,6 @@ class DataRepository @Inject constructor(
 ) {
     private val executorService = Executors.newSingleThreadExecutor()
     val weatherData: MutableLiveData<WeatherLocation> = MutableLiveData()
-
-    private val callback = object : Callback<WeatherLocation> {
-        override fun onFailure(call: Call<WeatherLocation>, t: Throwable) {
-            t.printStackTrace()
-        }
-
-        override fun onResponse(
-            call: Call<WeatherLocation>,
-            response: Response<WeatherLocation>
-        ) {
-            val data = response.body()
-            if (data != null) {
-                weatherData.value = data
-                runInBackground {
-                    localDataSource.insert(
-                        WeatherLocationLocal(
-                            0,
-                            System.currentTimeMillis(),
-                            data
-                        )
-                    )
-                }
-            }
-        }
-    }
 
     fun getWeatherData(lat: Float, lon: Float): LiveData<WeatherLocation> {
 
@@ -61,14 +40,18 @@ class DataRepository @Inject constructor(
                 weatherData.value = recentWeatherData.weatherLocationResponse
             } else {
 //                runInBackground { localDataSource.delete(recentWeatherData) }
-                testAPI(lat, lon).enqueue(callback)
+                makeApiCall(lat, lon)
             }
         } else {
-            testAPI(lat, lon).enqueue(callback)
+            makeApiCall(lat, lon)
         }
         return weatherData
     }
 
-    private fun testAPI(lat: Float, lon: Float) =
-        remoteDataSource.openWeatherMapApi.getWeatherLatLonTest(lat, lon)
+    private fun makeApiCall(lat: Float, lon: Float) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val data = remoteDataSource.openWeatherMapApi.getWeatherLatLon(lat, lon)
+            localDataSource.insert(WeatherLocationLocal(0, System.currentTimeMillis(), data))
+        }
+    }
 }
