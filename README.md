@@ -19,6 +19,10 @@ The app uses Retrofit to streamline interaction with the OpenWeatherMap API. It 
 ### Dagger
 The app uses Dagger to remove the biolerplate code and handles dependencies between Actvities, Fragments and classes. All activities and classes use Dagger to eliminate manual dependency injection.
 
+## Features
+- Syncs API data with locally in Room Database to save battery and reduce API calls.
+- Implements Kotlin Coroutines to manage background tasks effectively and reduce the need for callbacks while dealing with APIs.
+
 ## Screenshots
 The background changes based on the time of day.
 - Morning
@@ -33,5 +37,3 @@ The background changes based on the time of day.
 
 ## Under Development
 - Weather Information of User specified location, to make it more useful.
-- Linking with Room database to store the data offline on device to help save battery and reduce API calls.
-- Implementing Kotlin Coroutines to manage background tasks effectively and reduce need for callbacks while dealing with APIs.
